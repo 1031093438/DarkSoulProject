@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\MyButton.cs" />
      <Compile Include="Assets\Scripts\OnGroundSensor.cs" />
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
+     <Compile Include="Assets\TriggerController.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/UnityFiles/DarkSoulsSingleDevelpe/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
