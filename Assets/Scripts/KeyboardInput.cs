@@ -31,10 +31,12 @@ public class KeyboardInput : MonoBehaviour {
     public bool jump;
     public bool run;
     public bool roll;
+    public bool attack;
 
     public MyButton buttonJump = new MyButton();
     public MyButton buttonRun = new MyButton();
     public MyButton buttonRoll = new MyButton();
+    public MyButton buttonAttack = new MyButton();
 
     void Update()
     {
@@ -59,10 +61,13 @@ public class KeyboardInput : MonoBehaviour {
         //Key Setting
         buttonJump.Tick(Input.GetKey(keyJump));
         buttonRun.Tick(Input.GetKey(keyRun));
+        buttonAttack.Tick(Input.GetKey(keyAttack));
+        
         //buttonRoll.Tick(Input.GetKey(keyRoll));
 
         jump = buttonJump.OnPressed;
         run = buttonRun.IsPressing;
+        attack = buttonAttack.OnPressed;
         //roll = buttonRoll.OnPressed;
     }
 

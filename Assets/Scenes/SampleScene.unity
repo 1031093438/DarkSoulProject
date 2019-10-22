@@ -603,10 +603,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 559048449}
+  frictionOne: {fileID: 13400000, guid: 655e5562f4338ee4b8d88721a4a0c4aa, type: 2}
+  frictionZero: {fileID: 13400000, guid: e2d62a24e0910ee4abbcb32294613c78, type: 2}
   moveSpeed: 1.5
   jumpForce: 4
   rollForce: 1
   jabFroce: 1
+  targetLerp: 0
   planarVec: {x: 0, y: 0, z: 0}
   thrustVec: {x: 0, y: 0, z: 0}
   lockPlanar: 0
@@ -643,6 +646,7 @@ MonoBehaviour:
   jump: 0
   run: 0
   roll: 0
+  attack: 0
 --- !u!1 &1402057395
 GameObject:
   m_ObjectHideFlags: 0
