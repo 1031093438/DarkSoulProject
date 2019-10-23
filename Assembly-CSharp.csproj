@@ -53,19 +53,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CameraController.cs" />
-     <Compile Include="Assets\LeftArmAnimFix.cs" />
-     <Compile Include="Assets\RootMotionController.cs" />
-     <Compile Include="Assets\Scripts\ActorController.cs" />
-     <Compile Include="Assets\Scripts\FSMClearSignal.cs" />
-     <Compile Include="Assets\Scripts\FSMOnEnter.cs" />
-     <Compile Include="Assets\Scripts\FSMOnExit.cs" />
-     <Compile Include="Assets\Scripts\FSMOnUpdate.cs" />
+     <Compile Include="Assets\Scripts\Controller\ActorController.cs" />
+     <Compile Include="Assets\Scripts\Controller\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Controller\RootMotionController.cs" />
+     <Compile Include="Assets\Scripts\Controller\TriggerController.cs" />
+     <Compile Include="Assets\Scripts\FSM\FSMClearSignal.cs" />
+     <Compile Include="Assets\Scripts\FSM\FSMOnEnter.cs" />
+     <Compile Include="Assets\Scripts\FSM\FSMOnExit.cs" />
+     <Compile Include="Assets\Scripts\FSM\FSMOnUpdate.cs" />
      <Compile Include="Assets\Scripts\KeyboardInput.cs" />
+     <Compile Include="Assets\Scripts\LeftArmAnimFix.cs" />
      <Compile Include="Assets\Scripts\MyButton.cs" />
+     <Compile Include="Assets\Scripts\MyTimer.cs" />
      <Compile Include="Assets\Scripts\OnGroundSensor.cs" />
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
-     <Compile Include="Assets\TriggerController.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/UnityFiles/DarkSoulsSingleDevelpe/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
