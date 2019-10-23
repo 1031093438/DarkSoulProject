@@ -22,10 +22,12 @@ public class ActorController : MonoBehaviour {
 
     public Vector3 planarVec;  //平面向量
     public Vector3 thrustVec;  //冲量向量
+    private Vector3 deltaPos;
 
 
     public bool lockPlanar;
     private bool canAttack;
+    
     
 
     void Awake () {
@@ -72,8 +74,10 @@ public class ActorController : MonoBehaviour {
     }
 
     void FixedUpdate () {
+        rb.position += deltaPos;
         rb.velocity = new Vector3(planarVec.x, rb.velocity.y, planarVec.z) + (thrustVec);
         thrustVec = Vector3.zero;
+        deltaPos = Vector3.zero;
         
     }
 
@@ -162,5 +166,13 @@ public class ActorController : MonoBehaviour {
         int layerIndex = anim.GetLayerIndex(layerName);
         bool result = anim.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
         return result;
+    }
+
+    public void OnUpdateRM(object _deltaPos)
+    {
+        if (CheckState("attack1hC", "Attack"))
+        {
+            deltaPos += (Vector3)_deltaPos;
+        }
     }
 }

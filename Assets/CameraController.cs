@@ -35,6 +35,7 @@ public class CameraController : MonoBehaviour
         model.transform.eulerAngles = tempModelEuler;
 
         mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, transform.position, 0.3f);
-        mainCamera.transform.eulerAngles = transform.eulerAngles;
+        //mainCamera.transform.eulerAngles = transform.eulerAngles;
+        mainCamera.transform.LookAt(cameraHandle.transform);
     }
 }
