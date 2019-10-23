@@ -56,11 +56,10 @@ public class ActorController : MonoBehaviour {
         if (pi.jump)
         {
             anim.SetTrigger("jump");
-            
         }
 
         //Roll Setting
-        if (rb.velocity.magnitude > 5.0f || pi.roll)
+        if (rb.velocity.magnitude > 9.0f || pi.roll)
         {
             anim.SetTrigger("jump");
         }
@@ -69,6 +68,16 @@ public class ActorController : MonoBehaviour {
         if (pi.attack && CheckState("Ground") && canAttack)
         {
             anim.SetTrigger("attack");
+        }
+
+        //Defense Setting
+        if (pi.defense)
+        {
+            anim.SetBool("defense", true);
+        }
+        else
+        {
+            anim.SetBool("defense", false);
         }
 
     }
@@ -124,6 +133,7 @@ public class ActorController : MonoBehaviour {
     {
         col.material = frictionZero;
     }
+    
 
     //On Update Signal
     void OnRollUpdate()

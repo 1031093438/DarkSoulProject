@@ -16,6 +16,12 @@ public class KeyboardInput : MonoBehaviour {
     public string keyJump;
     public string keyAttack;
     public string keyRun;
+    public string keyDefense;
+
+    [Header("===== Mouse settings =====")]
+    public bool mouseEnabled = true;
+    public float mouseSensitivityX = 1.0f;
+    public float mouseSensitivityY = 1.0f;
 
     public float Dright;
     public float Dup;
@@ -32,19 +38,32 @@ public class KeyboardInput : MonoBehaviour {
     public bool run;
     public bool roll;
     public bool attack;
+    public bool defense;
 
     public MyButton buttonJump = new MyButton();
     public MyButton buttonRun = new MyButton();
     public MyButton buttonRoll = new MyButton();
     public MyButton buttonAttack = new MyButton();
+    public MyButton buttonDefense = new MyButton();
 
     void Update()
     {
         TargetDright = (Input.GetKey (DRight) ? 1.0f : 0) - (Input.GetKey (DLeft) ? 1.0f : 0);
         TargetDup = (Input.GetKey (DUp) ? 1.0f : 0) - (Input.GetKey (DDown) ? 1.0f : 0);
 
-        Jright = (Input.GetKey(JRight) ? 1.0f : 0) - (Input.GetKey(JLeft) ? 1.0f : 0);
-        Jup = (Input.GetKey(JUp) ? 1.0f : 0) - (Input.GetKey(JDown) ? 1.0f : 0);
+        if (mouseEnabled)
+        {
+            Jright = Input.GetAxis("Mouse X") * mouseSensitivityX;
+            Jup = Input.GetAxis("Mouse Y") * mouseSensitivityY;
+
+        }
+        else
+        {
+            Jright = (Input.GetKey(JRight) ? 1.0f : 0) - (Input.GetKey(JLeft) ? 1.0f : 0);
+            Jup = (Input.GetKey(JUp) ? 1.0f : 0) - (Input.GetKey(JDown) ? 1.0f : 0);
+
+        }
+
         if (!inputEnabled) {
             Dup = 0;
             Dright = 0;
@@ -62,12 +81,14 @@ public class KeyboardInput : MonoBehaviour {
         buttonJump.Tick(Input.GetKey(keyJump));
         buttonRun.Tick(Input.GetKey(keyRun));
         buttonAttack.Tick(Input.GetKey(keyAttack));
+        buttonDefense.Tick(Input.GetKey(keyDefense));
         
         //buttonRoll.Tick(Input.GetKey(keyRoll));
 
         jump = buttonJump.OnPressed;
         run = buttonRun.IsPressing;
         attack = buttonAttack.OnPressed;
+        defense = buttonDefense.IsPressing;
         //roll = buttonRoll.OnPressed;
     }
 
