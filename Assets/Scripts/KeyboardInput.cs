@@ -17,6 +17,7 @@ public class KeyboardInput : MonoBehaviour {
     public string keyAttack;
     public string keyRun;
     public string keyDefense;
+    public string keyLock;
 
     [Header("===== Mouse settings =====")]
     public bool mouseEnabled = true;
@@ -39,12 +40,14 @@ public class KeyboardInput : MonoBehaviour {
     public bool roll;
     public bool attack;
     public bool defense;
+    public bool lockOn;
 
     public MyButton buttonJump = new MyButton();
     public MyButton buttonRun = new MyButton();
     public MyButton buttonRoll = new MyButton();
     public MyButton buttonAttack = new MyButton();
     public MyButton buttonDefense = new MyButton();
+    public MyButton buttonLock = new MyButton();
 
     void Update()
     {
@@ -82,6 +85,7 @@ public class KeyboardInput : MonoBehaviour {
         buttonRun.Tick(Input.GetKey(keyRun));
         buttonAttack.Tick(Input.GetKey(keyAttack));
         buttonDefense.Tick(Input.GetKey(keyDefense));
+        buttonLock.Tick(Input.GetKey(keyLock));
         
         //buttonRoll.Tick(Input.GetKey(keyRoll));
 
@@ -89,6 +93,7 @@ public class KeyboardInput : MonoBehaviour {
         run = buttonRun.IsPressing && !buttonRun.IsDelaying;
         attack = buttonAttack.OnPressed;
         defense = buttonDefense.IsPressing;
+        lockOn = buttonLock.OnPressed;
         //roll = buttonRoll.OnPressed;
     }
 

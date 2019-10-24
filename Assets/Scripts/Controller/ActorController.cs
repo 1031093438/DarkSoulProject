@@ -8,6 +8,7 @@ public class ActorController : MonoBehaviour {
     private Animator anim;
     public GameObject model;
     private CapsuleCollider col;
+    public CameraController camcon;
 
     [Header("===== Friciton Settings =====")]
     public PhysicMaterial frictionOne;
@@ -80,6 +81,11 @@ public class ActorController : MonoBehaviour {
             anim.SetBool("defense", false);
         }
 
+        //LockOn Setting
+        if (pi.lockOn)
+        {
+            camcon.LockUnlock();
+        }
     }
 
     void FixedUpdate () {

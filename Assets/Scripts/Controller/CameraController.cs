@@ -11,6 +11,8 @@ public class CameraController : MonoBehaviour
     private GameObject model;
     private Camera mainCamera;
     private float tempEulerX;
+    [SerializeField]
+    private GameObject lockTarget;
 
     public float horizontal = 100.0f;
     public float vertical = 100.0f;
@@ -39,5 +41,28 @@ public class CameraController : MonoBehaviour
         mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, transform.position, 0.3f);
         //mainCamera.transform.eulerAngles = transform.eulerAngles;
         mainCamera.transform.LookAt(cameraHandle.transform);
+    }
+
+    public void LockUnlock()
+    {
+
+        //try to lock
+        Vector3 modelOrigin1 = model.transform.position;
+        Vector3 modelOrigin2 = modelOrigin1 + new Vector3(0, 1.0f, 0);
+        Vector3 boxCenter = modelOrigin2 + model.transform.forward * 5.0f;
+
+        Collider[] cols = Physics.OverlapBox(boxCenter, new Vector3(0.5f, 0.5f, 5.0f), model.transform.rotation, LayerMask.GetMask("Enemy"));
+        if(cols.Length == 0)
+        {
+            lockTarget = null;
+        }
+        else
+        {
+            foreach (var col in cols)
+            {
+                lockTarget = col.gameObject;
+            }
+        }
+
     }
 }

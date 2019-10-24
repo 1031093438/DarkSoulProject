@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\FSM\FSMOnEnter.cs" />
      <Compile Include="Assets\Scripts\FSM\FSMOnExit.cs" />
      <Compile Include="Assets\Scripts\FSM\FSMOnUpdate.cs" />
+     <Compile Include="Assets\Scripts\GizmosTest.cs" />
      <Compile Include="Assets\Scripts\KeyboardInput.cs" />
      <Compile Include="Assets\Scripts\LeftArmAnimFix.cs" />
      <Compile Include="Assets\Scripts\MyButton.cs" />
