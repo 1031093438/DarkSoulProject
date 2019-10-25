@@ -90,7 +90,7 @@ public class KeyboardInput : MonoBehaviour {
         //buttonRoll.Tick(Input.GetKey(keyRoll));
 
         jump = buttonJump.OnPressed;
-        run = buttonRun.IsPressing && !buttonRun.IsDelaying;
+        run = buttonRun.IsPressing;
         attack = buttonAttack.OnPressed;
         defense = buttonDefense.IsPressing;
         lockOn = buttonLock.OnPressed;

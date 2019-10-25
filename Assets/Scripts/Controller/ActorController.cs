@@ -39,19 +39,33 @@ public class ActorController : MonoBehaviour {
     }
 
     void Update () {
-        
+        anim.SetFloat("magnitude", rb.velocity.magnitude);
+
+
         //Setting Model Turn and Forward
-        anim.SetFloat ("forward", Mathf.Lerp(anim.GetFloat("forward"), pi.Dmagnitude * (pi.run ? 2.0f : 1.0f), 0.3f));
-        if (pi.Dmagnitude > 0.1f){
-            model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
-        }
-
-        //Setting Action Lock
-        if(lockPlanar == false)
+        //anim.SetFloat ("forward", Mathf.Lerp(anim.GetFloat("forward"), pi.Dmagnitude * (pi.run ? 2.0f : 1.0f), 0.3f));
+        anim.SetFloat("forward", Mathf.Lerp(anim.GetFloat("forward"), pi.Dup * (pi.run ? 2.0f : 1.0f), 0.3f));
+        anim.SetFloat("right", Mathf.Lerp(anim.GetFloat("right"), pi.Dright * (pi.run ? 2.0f : 1.0f), 0.3f));
+        if (camcon.lockState == false)
         {
-            planarVec = pi.Dmagnitude * model.transform.forward * moveSpeed * (pi.run ? 2.0f : 1.0f);
-        }
+            if (pi.Dmagnitude > 0.1f){
+                model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
+            }
 
+            //Setting Action Lock
+            if(lockPlanar == false)
+            {
+                planarVec = pi.Dmagnitude * model.transform.forward * moveSpeed * (pi.run ? 2.0f : 1.0f);
+            }
+        }
+        else
+        {
+            model.transform.forward = transform.forward;
+            if(lockPlanar == false)
+            {
+                planarVec = pi.Dmagnitude * pi.Dvec * moveSpeed * (pi.run ? 2.0f : 1.0f);
+            }
+        }
 
         //Jump Setting
         if (pi.jump)
@@ -60,10 +74,10 @@ public class ActorController : MonoBehaviour {
         }
 
         //Roll Setting
-        if (rb.velocity.magnitude > 9.0f || pi.roll)
-        {
-            anim.SetTrigger("jump");
-        }
+        //if (rb.velocity.magnitude > 9.0f || pi.roll)
+        //{
+        //    anim.SetTrigger("jump");
+        //}
 
         //Attack Setting
         if (pi.attack && CheckState("Ground") && canAttack)

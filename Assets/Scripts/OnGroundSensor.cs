@@ -14,7 +14,7 @@ public class OnGroundSensor : MonoBehaviour
     void Awake()
     {
         radius = capcol.radius - 0.05f;
-        offset = 0.1f;
+        
     }
 
     // Update is called once per frame
