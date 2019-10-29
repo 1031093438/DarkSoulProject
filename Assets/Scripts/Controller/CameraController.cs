@@ -14,12 +14,13 @@ public class CameraController : MonoBehaviour
     private Camera mainCamera;
     private float tempEulerX;
     [SerializeField]
-    private GameObject lockTarget;
+    private LockTarget lockTarget;
 
     public float horizontal = 100.0f;
     public float vertical = 100.0f;
 
     public bool lockState;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,6 +32,7 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         lockDot.enabled = false;
         lockState = false;
+
     }
 
     // Update is called once per frame
@@ -47,15 +49,30 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            Vector3 tempForward = lockTarget.transform.position - model.transform.position;
+            Vector3 tempForward = lockTarget.obj.transform.position - model.transform.position;
             tempForward.y = 0;
             playerHandle.transform.forward = tempForward;
+            cameraHandle.transform.LookAt(lockTarget.obj.transform);
         }
 
 
         mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, transform.position, 0.3f);
         //mainCamera.transform.eulerAngles = transform.eulerAngles;
         mainCamera.transform.LookAt(cameraHandle.transform);
+
+        //LockDot and Auto Unlock Setting
+        if(lockTarget != null)
+        {
+            lockDot.rectTransform.position = Camera.main.WorldToScreenPoint(lockTarget.obj.transform.position + new Vector3(0, lockTarget.halfHeight, 0));
+
+            if(Vector3.Distance(model.transform.position, lockTarget.obj.transform.position) > 10.0f)
+            {
+                lockTarget = null;
+                lockDot.enabled = false;
+                lockState = false;
+            }
+        }
+        
     }
 
     public void LockUnlock()
@@ -77,18 +94,31 @@ public class CameraController : MonoBehaviour
         {
             foreach (var col in cols)
             {
-                if(lockTarget == col.gameObject)
+                if( lockTarget != null && lockTarget.obj == col.gameObject)
                 {
                     lockTarget = null;
                     lockDot.enabled = false;
                     lockState = false;
                     break;
                 }
-                lockTarget = col.gameObject;
+                
+                lockTarget= new LockTarget( col.gameObject, col.bounds.extents.y);
                 lockDot.enabled = true;
                 lockState = true;
             }
         }
 
+    }
+
+    private class LockTarget
+    {
+        public GameObject obj;
+        public float halfHeight;
+
+        public LockTarget(GameObject _obj, float _halfHeight)
+        {
+            obj = _obj;
+            halfHeight = _halfHeight;
+        }
     }
 }

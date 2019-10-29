@@ -28,6 +28,7 @@ public class ActorController : MonoBehaviour {
 
     public bool lockPlanar;
     private bool canAttack;
+    private bool trackDirection = false;
     
     
 
@@ -36,36 +37,52 @@ public class ActorController : MonoBehaviour {
         rb = GetComponent<Rigidbody> ();
         anim = model.GetComponent<Animator> ();
         col = GetComponent<CapsuleCollider> ();
+        
     }
 
     void Update () {
-        anim.SetFloat("magnitude", rb.velocity.magnitude);
-
 
         //Setting Model Turn and Forward
-        //anim.SetFloat ("forward", Mathf.Lerp(anim.GetFloat("forward"), pi.Dmagnitude * (pi.run ? 2.0f : 1.0f), 0.3f));
-        anim.SetFloat("forward", Mathf.Lerp(anim.GetFloat("forward"), pi.Dup * (pi.run ? 2.0f : 1.0f), 0.3f));
-        anim.SetFloat("right", Mathf.Lerp(anim.GetFloat("right"), pi.Dright * (pi.run ? 2.0f : 1.0f), 0.3f));
+        anim.SetFloat("magnitude", rb.velocity.magnitude);
         if (camcon.lockState == false)
         {
-            if (pi.Dmagnitude > 0.1f){
-                model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
+
+            anim.SetFloat("forward", pi.Dmagnitude * Mathf.Lerp(anim.GetFloat("forward"), (pi.run ? 2 : 1), 0.15f));
+            anim.SetFloat("right", 0);
+
+            if (pi.Dmagnitude > 0.1f)
+            { 
+                anim.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);
             }
 
-            //Setting Action Lock
-            if(lockPlanar == false)
+            if (lockPlanar == false)
             {
-                planarVec = pi.Dmagnitude * model.transform.forward * moveSpeed * (pi.run ? 2.0f : 1.0f);
+                planarVec = pi.Dmagnitude * model.transform.forward * moveSpeed * ((pi.run) ? 2f : 1f);
             }
         }
         else
         {
-            model.transform.forward = transform.forward;
-            if(lockPlanar == false)
+            Vector3 localDvec = transform.InverseTransformVector(pi.Dvec);
+            anim.SetFloat("forward", localDvec.z * (pi.run ? 2 : 1));
+            anim.SetFloat("right", localDvec.x * (pi.run ? 2 : 1));
+
+            if (trackDirection == false)
             {
-                planarVec = pi.Dmagnitude * pi.Dvec * moveSpeed * (pi.run ? 2.0f : 1.0f);
+                model.transform.forward = transform.forward;
+            }
+            else
+            {
+                model.transform.forward = planarVec.normalized;
+            }
+
+            if (lockPlanar == false)
+            {
+                planarVec = pi.Dvec * moveSpeed * ((pi.run) ? 2f : 1f);
             }
         }
+
+
+        //Setting Action Lock
 
         //Jump Setting
         if (pi.jump)
@@ -116,12 +133,14 @@ public class ActorController : MonoBehaviour {
         LockUnLockInput(false, true);
         thrustVec = new Vector3(0, jumpForce, 0);
         canAttack = false;
+        trackDirection = true;
     }
     void OnGroundEnter()
     {
         LockUnLockInput(true, false);
         canAttack = true;
         col.material = frictionOne;
+        trackDirection = false;
     }
 
     void OnFallEnter()
@@ -132,6 +151,7 @@ public class ActorController : MonoBehaviour {
     {
         LockUnLockInput(false, true);
         canAttack = false;
+        trackDirection = true;
     }
     void OnJabEnter()
     {
